@@ -73,26 +73,48 @@ class ProjectBoard extends Page
             ->get();
     }
 
-    #[On('task-moved')]
     public function moveTask($taskId, $newStatusId): void
     {
         $task = Task::find($taskId);
 
-        if ($task && $task->project_id === $this->selectedProject?->id) {
+        // Pastikan task ditemukan dan milik proyek yang dipilih
+        if ($task && $task->project_id === $this->selectedProject?->id ) {
+
+            // Tambahkan pengecekan agar hanya task yang dimiliki pengguna yang dapat dipindahkan
+            if ($task->user_id !== auth()->id() && !auth()->user()->hasRole(['super_admin'])) {
+                $this->loadTaskStatuses();
+                $this->dispatch('task-updated');
+                Notification::make()
+                    ->title('Permission Denied')
+                    ->body('You do not have permission to move this task.')
+                    ->danger()
+                    ->send();
+                return;
+            }
+
+            // Update status task jika user memiliki izin
             $task->update([
                 'task_status_id' => $newStatusId
             ]);
 
+            // Memuat ulang status task
             $this->loadTaskStatuses();
 
+            // Kirimkan event dan notifikasi
             $this->dispatch('task-updated');
 
             Notification::make()
                 ->title('Task Berhasil Dipindahkan')
                 ->success()
                 ->send();
+        } else {
+            Notification::make()
+                ->title('Task Not Found or Invalid Project')
+                ->danger()
+                ->send();
         }
     }
+
 
     #[On('refresh-board')]
     public function refreshBoard(): void

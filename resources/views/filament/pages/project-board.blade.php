@@ -81,7 +81,11 @@
                                                 <span class="w-4 h-4 rounded-full bg-primary-500 flex items-center justify-center text-xs text-white mr-1.5">
                                                     {{ substr($task->assignee->name, 0, 1) }}
                                                 </span>
-                                                <span class="text-xs font-medium">{{ $task->assignee->name }}</span>
+                                                @if ($task->assignee && $task->assignee->id == auth()->id())
+                                                    <span class="text-xs font-medium">Anda</span>
+                                                @else
+                                                    <span class="text-xs font-medium">{{ $task->assignee->name }}</span>
+                                                @endif
                                             </div>
                                         @else
                                             <div class="inline-flex items-center px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-400">

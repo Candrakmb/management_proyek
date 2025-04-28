@@ -17,7 +17,6 @@ class CreateProject extends CreateRecord
             $defaultStatuses = [
                 ['name' => 'To Do', 'color' => '#F59E0B'],
                 ['name' => 'In Progress', 'color' => '#3B82F6'],
-                ['name' => 'Review', 'color' => '#8B5CF6'],
                 ['name' => 'Done', 'color' => '#10B981'],
             ];
 
