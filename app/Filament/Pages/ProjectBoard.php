@@ -88,7 +88,7 @@ class ProjectBoard extends Page
             $this->dispatch('task-updated');
 
             Notification::make()
-                ->title('task Berhasil Dipindahkan')
+                ->title('Task Berhasil Dipindahkan')
                 ->success()
                 ->send();
         }

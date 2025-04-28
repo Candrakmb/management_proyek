@@ -40,29 +40,6 @@ class ViewTask extends ViewRecord
                         || $task->user_id === auth()->id();
                 }),
 
-            Actions\Action::make('addComment')
-                ->label('Add Comment')
-                ->icon('heroicon-o-chat-bubble-left-right')
-                ->color('success')
-                ->form([
-                    RichEditor::make('comment')
-                        ->required(),
-                ])
-                ->action(function (array $data) {
-                    $task = $this->getRecord();
-
-                    $task->comments()->create([
-                        'user_id' => auth()->id(),
-                        'comment' => $data['comment'],
-                    ]);
-
-                    Notification::make()
-                        ->title('Comment added successfully')
-                        ->success()
-                        ->send();
-                })
-                ->visible($canComment),
-
             Actions\Action::make('back')
                 ->label('Back to Board')
                 ->color('gray')
@@ -137,21 +114,6 @@ class ViewTask extends ViewRecord
                             ->html()
                             ->columnSpanFull(),
                     ]),
-                Section::make('Comments')
-                    ->icon('heroicon-o-chat-bubble-left-right')
-                    ->description('Discussion about this task')
-                    ->schema([
-                        TextEntry::make('comments_list')
-                            ->label('Recent Comments')
-                            ->state(function (Task $record) {
-                                if (method_exists($record, 'comments')) {
-                                    return $record->comments()->with('user')->latest()->get();
-                                }
-                                return collect();
-                            })
-                            ->view('filament.resources.task-resource.latest-comments'),
-                    ])
-                    ->collapsible(),
 
                 Section::make('Status History')
                     ->icon('heroicon-o-clock')

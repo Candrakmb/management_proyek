@@ -11,6 +11,28 @@
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+         <!-- Tailwind CSS CDN -->
+         <script src="https://cdn.tailwindcss.com"></script>
+         <script>
+             tailwind.config = {
+                 theme: {
+                     extend: {
+                         fontFamily: {
+                             sans: ['Instrument Sans', 'sans-serif'],
+                         },
+                     }
+                 }
+             }
+         </script>
+         <style type="text/tailwindcss">
+             .gradient-background {
+                 @apply bg-gradient-to-r from-blue-500 to-blue-600;
+             }
+             .text-gradient {
+                 @apply bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent;
+             }
+         </style>
+
     </head>
     <body>
 

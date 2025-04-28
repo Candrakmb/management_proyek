@@ -12,7 +12,7 @@ class CreateProject extends CreateRecord
     protected function afterCreate(): void
     {
         $createDefaultStatuses = $this->data['create_default_statuses'] ?? true;
-        
+
         if ($createDefaultStatuses) {
             $defaultStatuses = [
                 ['name' => 'To Do', 'color' => '#F59E0B'],
@@ -22,7 +22,7 @@ class CreateProject extends CreateRecord
             ];
 
             foreach ($defaultStatuses as $status) {
-                $this->record->ticketStatuses()->create($status);
+                $this->record->taskStatuses()->create($status);
             }
         }
     }
