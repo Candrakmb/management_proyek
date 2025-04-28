@@ -1,4 +1,4 @@
-A Laravel Filament 3 application for managing projects with ticket management and status tracking.
+A Laravel Filament 3 application for managing projects with task management and status tracking.
 
 ## Requirements
 
